@@ -9,6 +9,9 @@ location_list = {
         'date_description':"this is the DATE description of the city",
         'verbs':{
             'think':'The size and scope of humanity is both fearsome and exciting. The city always reminds you of this feeling.'
+        },
+        'nouns':{
+            'something':"it looks great"
         }
     },
     "home_exterior":{
@@ -22,6 +25,9 @@ location_list = {
         'date_description':"description of Date at home exterior",
         'verbs':{
             'think':'You miss your mom.'
+        },
+        'nouns':{
+            'home':'Your landlord does a great job keeping your apartment looking nice.'
         }
     },
     "home_interior":{
@@ -33,6 +39,9 @@ location_list = {
         'date_description':"description of Date at home interior",
         'verbs':{
             'masturbate':'Busting a nut feels great but you don\'t get any life changing experience from it.'
+        },
+        'nouns':{
+            'dog':'Your dog looks happy.'
         }
     }
 }

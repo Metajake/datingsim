@@ -13,20 +13,25 @@ class Event(object):
         
 class Scene(object):
     """an object to indicate who and what is in our current location."""
-    def __init__(self, location, girl):
+    def __init__(self, location, characters=[]):
         self.location = location
-        self.girl = girl
+        if characters:
+            self.characters = characters
 
 class Location(object):
-    def __init__(self, name, destinations, description, date_description, verbs):
+    def __init__(self, name, destinations, description, date_description, verbs, nouns):
         self.name = name
         self.destinations = destinations
         self.description = description
         self.date_description = date_description        
         self.verbs = verbs
+        self.nouns = nouns
         
     def describe(self):
         print self.description
+        
+    def describe_thing(self, thing):
+        print self.nouns[thing]
         
 class Girl(object):
     def __init__(self, name, fall_in_love, prude, prefer_location):
@@ -47,7 +52,7 @@ class Engine(object):
         
     def build_locations(self, location_list):
         for key, value in location_list.iteritems():
-            obj = Location(key, value['destinations'], value['description'], value['date_description'], value['verbs'])
+            obj = Location(key, value['destinations'], value['description'], value['date_description'], value['verbs'], value['nouns'])
             self.locations[key] = obj
             
     def build_girls(self, girl_list):
@@ -74,21 +79,29 @@ class Engine(object):
         for k, v in self.current_location.destinations.iteritems():
             inputobj.direction.append(k)
 
-        #add location sensitive verbs to inputobject verb list
+        #add location verbs to inputobject verb list
         del inputobj.verb[:]
         inputobj.verb = ['go','give','leave','use','look']
         for k, v in self.current_location.verbs.iteritems():
             inputobj.verb.append(k)
+            
+        #add location nouns to inputobject verb list
+        del inputobj.noun[:]
+        for k, v in self.current_location.nouns.iteritems():
+            inputobj.noun.append(k)
         
         #update Input Object's "Vocab" lists
         inputobj.vocab['verb'] = inputobj.verb
         inputobj.vocab['direction'] = inputobj.direction
+        inputobj.vocab['noun'] = inputobj.noun
         
     def get_input(self, inputobj, character):
         s = inputobj.scan(raw_input("> "), inputobj)
+        #print s
         x = inputobj.parse_sentence(s)
-        #print x
+        
         if x.verb.lower() == 'go':
+            #Warning???? this MIGHT "erase" the list results of 's' above.
             self.activate_location(x.object.lower(), inputobj, character)
         elif x.verb.lower() == "reflect":
             character.reflect()
@@ -96,4 +109,5 @@ class Engine(object):
             if x.object == "none":
                 self.current_location.describe()
             else:
-                x.object.describe()
+                print "looking at something"
+                self.current_location.describe_thing(x.object)

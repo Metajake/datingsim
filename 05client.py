@@ -11,7 +11,11 @@ e.build_girls(girl_list)
 
 e.activate_location('home_exterior', i, mc)
 
+s1 = Scene(e.current_location, e.girls['tammy'])
+
 while e.game_over != True:
     #print i.verb
     #print i.direction
+    #print i.noun
+    
     e.get_input(i, mc)
