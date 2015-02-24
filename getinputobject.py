@@ -7,16 +7,10 @@ class ParserError(Exception):
 #The final Sentence Class outputted by the parser functions
 class Sentence(object):
     def __init__(self, subject, verb, obj):
-        self.type = "sentence"
         self.subject = subject[1]
         self.verb = verb[1]
         self.object = obj[1]
 
-class Command(object):
-    def __init__(self, command):
-        self.type = "command"
-        self.command = command[1]
-        
 #Input Object
 class Input(object):
     def __init__(self):
@@ -24,7 +18,7 @@ class Input(object):
         #self.direction=['north','south','east','west','inside', 'outside']
         self.verb = []
         self.direction = []
-        self.command = ['reflect', 'look']
+        self.command = ['reflect']
         self.noun=['condom','flowers']
         self.stop=['the','in','of','to', 'at']
         self.vocab={
@@ -82,10 +76,8 @@ class Input(object):
         
         if next_word == 'noun':
             return self.match(word_list, 'noun')
-        elif next_word == 'verb':
+        elif next_word == 'verb' or next_word == 'command':
             return ('noun', 'player')
-        elif next_word == 'command':
-            return self.match(word_list, 'command')
         else:
             raise ParserError("(parsing subject) Expected a verb next.")
                 
@@ -94,7 +86,10 @@ class Input(object):
         
         if self.peek(word_list) == 'verb':
             return self.match(word_list, 'verb')
+        elif self.peek(word_list) == 'command':
+            return self.match(word_list, 'command')
         else:
+            #return ('verb', 'none')
             raise ParserError("(parsing verb) Expected a verb next.")
                 
     def parse_object(self, word_list):
@@ -106,13 +101,11 @@ class Input(object):
         elif next_word == 'direction':
             return self.match(word_list, 'direction')
         else:
-            raise ParserError("(parsing object) Expected a noun or direction next.")
+            return('noun', 'none')
+            #raise ParserError("(parsing object) Expected a noun or direction next.")
             
     def parse_sentence(self, word_list):
         subj = self.parse_subject(word_list)
-        if subj[0] == 'command':
-            return Command(subj)
-        else:
-            verb = self.parse_verb(word_list)
-            obj = self.parse_object(word_list)
-            return Sentence(subj, verb, obj)
+        verb = self.parse_verb(word_list)
+        obj = self.parse_object(word_list)
+        return Sentence(subj, verb, obj)

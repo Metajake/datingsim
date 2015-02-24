@@ -87,12 +87,13 @@ class Engine(object):
     def get_input(self, inputobj, character):
         s = inputobj.scan(raw_input("> "), inputobj)
         x = inputobj.parse_sentence(s)
-        print x
-        if x.type == 'sentence':
-            if x.verb.lower() == 'go':
-                self.activate_location(x.object.lower(), inputobj, character)
-        elif x.type == 'command':
-            if x.command.lower() == 'reflect':
-                character.reflect()
-            #elif x.command.lower() == 'look':
-            #    self.current_location.describe()
+        #print x
+        if x.verb.lower() == 'go':
+            self.activate_location(x.object.lower(), inputobj, character)
+        elif x.verb.lower() == "reflect":
+            character.reflect()
+        elif x.verb.lower() == "look":
+            if x.object == "none":
+                self.current_location.describe()
+            else:
+                x.object.describe()
