@@ -12,6 +12,6 @@ e.build_girls(girl_list)
 e.activate_location('home_exterior', i, mc)
 
 while e.game_over != True:
-    print i.verb
-    print i.direction
+    #print i.verb
+    #print i.direction
     e.get_input(i, mc)

@@ -7,10 +7,16 @@ class ParserError(Exception):
 #The final Sentence Class outputted by the parser functions
 class Sentence(object):
     def __init__(self, subject, verb, obj):
+        self.type = "sentence"
         self.subject = subject[1]
         self.verb = verb[1]
         self.object = obj[1]
 
+class Command(object):
+    def __init__(self, command):
+        self.type = "command"
+        self.command = command[1]
+        
 #Input Object
 class Input(object):
     def __init__(self):
@@ -18,13 +24,15 @@ class Input(object):
         #self.direction=['north','south','east','west','inside', 'outside']
         self.verb = []
         self.direction = []
+        self.command = ['reflect', 'look']
         self.noun=['condom','flowers']
         self.stop=['the','in','of','to', 'at']
         self.vocab={
             'verb':self.verb,
             'direction':self.direction,
             'noun':self.noun,
-            'stop':self.stop
+            'stop':self.stop,
+            'command':self.command
         }
 
     def scan(self, sentence, inputobj):
@@ -76,6 +84,8 @@ class Input(object):
             return self.match(word_list, 'noun')
         elif next_word == 'verb':
             return ('noun', 'player')
+        elif next_word == 'command':
+            return self.match(word_list, 'command')
         else:
             raise ParserError("(parsing subject) Expected a verb next.")
                 
@@ -96,10 +106,13 @@ class Input(object):
         elif next_word == 'direction':
             return self.match(word_list, 'direction')
         else:
-            raise ParserError("Expected a noun or direction next.")
+            raise ParserError("(parsing object) Expected a noun or direction next.")
             
     def parse_sentence(self, word_list):
         subj = self.parse_subject(word_list)
-        verb = self.parse_verb(word_list)
-        obj = self.parse_object(word_list)
-        return Sentence(subj, verb, obj)
+        if subj[0] == 'command':
+            return Command(subj)
+        else:
+            verb = self.parse_verb(word_list)
+            obj = self.parse_object(word_list)
+            return Sentence(subj, verb, obj)

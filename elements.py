@@ -2,6 +2,9 @@ class Character(object):
     def __init__(self, name):
         self.name = name
         self.known_locations = []
+        
+    def reflect(self):
+        print "My known locations are: "+str(self.known_locations)
     
 class Event(object):
     """an object to trigger scripted character appearences, dialogue, encounters, movement, etc."""
@@ -56,17 +59,15 @@ class Engine(object):
         if self.current_location:
             print "my current location is", self.current_location.name
             new_location = self.current_location.destinations[destination]
-            print new_location
             self.current_location = self.locations[new_location]
-            self.current_location.describe()
         else:
-            print "no current location"
             self.current_location = self.locations[destination]
-            self.current_location.describe()
+            
+        print "I am currently at the "+ str(self.current_location.name)+"."
+        self.current_location.describe()
         
-        #create function here to add current location to character
-        #list of known locations
-        
+        character.known_locations.append(self.current_location.name)
+
         #clear the list of directions you can go    
         #repopulate list of available directions based on current location
         del inputobj.direction[:]
@@ -75,16 +76,23 @@ class Engine(object):
 
         #add location sensitive verbs to inputobject verb list
         del inputobj.verb[:]
-        inputobj.verb = ['go','give','leave','use','look','reflect']
+        inputobj.verb = ['go','give','leave','use','look']
         for k, v in self.current_location.verbs.iteritems():
             inputobj.verb.append(k)
-                
+        
+        #update Input Object's "Vocab" lists
         inputobj.vocab['verb'] = inputobj.verb
         inputobj.vocab['direction'] = inputobj.direction
         
     def get_input(self, inputobj, character):
         s = inputobj.scan(raw_input("> "), inputobj)
-        print s
         x = inputobj.parse_sentence(s)
-        if x.verb.lower() == 'go':
-            self.activate_location(x.object.lower(), inputobj, character)
+        print x
+        if x.type == 'sentence':
+            if x.verb.lower() == 'go':
+                self.activate_location(x.object.lower(), inputobj, character)
+        elif x.type == 'command':
+            if x.command.lower() == 'reflect':
+                character.reflect()
+            #elif x.command.lower() == 'look':
+            #    self.current_location.describe()
