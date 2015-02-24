@@ -14,8 +14,9 @@ class Sentence(object):
 #Input Object
 class Input(object):
     def __init__(self):
-        self.verb=['go','give','leave','use', 'look']
-        #direction=['north','south','east','west','inside', 'outside']
+        #self.verb=['go','give','leave','use','look','reflect']
+        #self.direction=['north','south','east','west','inside', 'outside']
+        self.verb = []
         self.direction = []
         self.noun=['condom','flowers']
         self.stop=['the','in','of','to', 'at']
@@ -26,13 +27,13 @@ class Input(object):
             'stop':self.stop
         }
 
-    def scan(self, sentence):
+    def scan(self, sentence, inputobj):
         """Input the raw text --> Output a List of Tuples which correspond to the categories above"""
         wordlist=sentence.split()
         result=[]
         for word in wordlist:
             found=False
-            for key,value in self.vocab.items():
+            for key,value in inputobj.vocab.items():
                 if word.lower() in value:
                     result.append((key,word))
                     found=True
@@ -76,7 +77,7 @@ class Input(object):
         elif next_word == 'verb':
             return ('noun', 'player')
         else:
-            raise ParserError("Expected a verb next.")
+            raise ParserError("(parsing subject) Expected a verb next.")
                 
     def parse_verb(self, word_list):
         self.skip(word_list, 'stop')
@@ -84,7 +85,7 @@ class Input(object):
         if self.peek(word_list) == 'verb':
             return self.match(word_list, 'verb')
         else:
-            raise ParserError("Expected a verb next.")
+            raise ParserError("(parsing verb) Expected a verb next.")
                 
     def parse_object(self, word_list):
         self.skip(word_list, 'stop')

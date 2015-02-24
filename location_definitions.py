@@ -6,7 +6,10 @@ location_list = {
             'south':"home_exterior"
         },
         'description':"this is the description of the city",
-        'date_description':"this is the DATE description of the city"
+        'date_description':"this is the DATE description of the city",
+        'verbs':{
+            'think':'The size and scope of humanity is both fearsome and exciting. The city always reminds you of this feeling.'
+        }
     },
     "home_exterior":{
         'ident':02,
@@ -16,7 +19,10 @@ location_list = {
             'inside': "home_interior"
         },
         'description':"description of home exterior",
-        'date_description':"description of Date at home exterior"
+        'date_description':"description of Date at home exterior",
+        'verbs':{
+            'think':'You miss your mom.'
+        }
     },
     "home_interior":{
         'ident':03,
@@ -24,6 +30,9 @@ location_list = {
             'outside': "home_exterior"
         },
         'description':"description of home interior",
-        'date_description':"description of Date at home interior"
+        'date_description':"description of Date at home interior",
+        'verbs':{
+            'masturbate':'Busting a nut feels great but you don\'t get any life changing experience from it.'
+        }
     }
 }
