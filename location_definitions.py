@@ -12,7 +12,8 @@ location_list = {
         },
         'nouns':{
             'something':"it looks great"
-        }
+        },
+        'inactive_verbs':{}
     },
     "home_exterior":{
         'ident':02,
@@ -28,7 +29,8 @@ location_list = {
         },
         'nouns':{
             'home':'Your landlord does a great job keeping your apartment looking nice.'
-        }
+        },
+        'inactive_verbs':{}
     },
     "home_interior":{
         'ident':03,
@@ -37,11 +39,12 @@ location_list = {
         },
         'description':"description of home interior",
         'date_description':"description of Date at home interior",
-        'verbs':{
-            'masturbate':'Busting a nut feels great but you don\'t get any life changing experience from it.'
-        },
+        'verbs':{},
         'nouns':{
             'dog':'Your dog looks happy.'
+        },
+        'inactive_verbs':{
+            'masturbate':'Busting a nut feels great but you don\'t get any life changing experience from it.'
         }
     }
 }

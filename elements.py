@@ -13,13 +13,14 @@ class Scene(object):
             self.characters = characters
 
 class Location(object):
-    def __init__(self, name, destinations, description, date_description, verbs, nouns):
+    def __init__(self, name, destinations, description, date_description, verbs, nouns, inactive_verbs):
         self.name = name
         self.destinations = destinations
         self.description = description
         self.date_description = date_description        
         self.verbs = verbs
         self.nouns = nouns
+        self.inactive_verbs = inactive_verbs
         
     def describe(self):
         print self.description
@@ -32,14 +33,15 @@ class Character(object):
         self.name = ""
         self.known_locations = []
     
-    def get_name(self, name):
+    def get_name(self, name=""):
         print "What is your name?"
         if name:
-            self.name = name
+            self.name = "Kosek"
         else:
             self.name = raw_input("> ")
 
     def reflect(self):
+        print "My name is", self.name
         print "My known locations are: "+str(self.known_locations)
 
 class Girl(object):
@@ -62,7 +64,7 @@ class Engine(object):
         
     def build_locations(self, location_list):
         for key, value in location_list.iteritems():
-            obj = Location(key, value['destinations'], value['description'], value['date_description'], value['verbs'], value['nouns'])
+            obj = Location(key, value['destinations'], value['description'], value['date_description'], value['verbs'], value['nouns'], value['inactive_verbs'])
             self.locations[key] = obj
             
     def build_girls(self, girl_list):
@@ -99,32 +101,45 @@ class Engine(object):
         del inputobj.noun[:]
         for k, v in self.current_location.nouns.iteritems():
             inputobj.noun.append(k)
+            
+        #add location inactive verbs to inputobjects inactive verb list
+        del inputobj.inactive_verb[:]
+        for k, v in self.current_location.inactive_verbs.iteritems():
+            inputobj.inactive_verb.append(k)
         
         #update Input Object's "Vocab" lists
         inputobj.vocab['verb'] = inputobj.verb
         inputobj.vocab['direction'] = inputobj.direction
         inputobj.vocab['noun'] = inputobj.noun
+        inputobj.vocab['inactive_verb'] = inputobj.inactive_verb
         
     def get_input(self, inputobj, character):
         s = inputobj.scan(raw_input("> "), inputobj)
-        print s
+        #print s
         
         x = inputobj.parse_sentence(s)
         #for i in dir(x):
         #    print i
+        #print x.subject
+        
+        if x.subject == 'error':
+            inputobj.error_msg()
+        
+        if x.subject == 'inactive_player':
+            print self.current_location.inactive_verbs[x.verb]
         
         if x.verb == "?":
-            print "I can do the following", inputobj.vocab['verb']
-            print "I can go in the following directions", inputobj.vocab['direction']
-            print "The following are in this scene", inputobj.vocab['noun']
+            inputobj.help()
         if x.verb.lower() == 'go':
-            #Warning???? this MIGHT "erase" the list results of 's' above.
-            self.activate_location(x.object.lower(), inputobj, character)
+            if x.object.lower() == 'error':
+                inputobj.error_msg()
+            else:
+                #Warning???? this MIGHT "erase" the list results of 's' above.
+                self.activate_location(x.object.lower(), inputobj, character)
         elif x.verb.lower() == "reflect":
             character.reflect()
         elif x.verb.lower() == "look":
             if x.object == "none":
                 self.current_location.describe()
             else:
-                print "looking at something"
                 self.current_location.describe_thing(x.object)
