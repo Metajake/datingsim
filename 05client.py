@@ -5,13 +5,16 @@ from elements import *
 
 e = Engine()
 i = Input()
-mc = Character("J")
+mc = Character()
 e.build_locations(location_list)
 e.build_girls(girl_list)
 
-e.activate_location('home_exterior', i, mc)
-
 s1 = Scene(e.current_location, e.girls['tammy'])
+
+##### Begin game ######
+e.introduction()
+mc.get_name()
+e.activate_location('home_exterior', i, mc)
 
 while e.game_over != True:
     #print i.verb

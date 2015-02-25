@@ -18,7 +18,7 @@ class Input(object):
         #self.direction=['north','south','east','west','inside', 'outside']
         self.verb = []
         self.direction = []
-        self.command = ['reflect']
+        self.command = ['reflect', '?']
         self.noun=['condom','flowers']
         self.stop=['the','in','of','to', 'at']
         self.vocab={

@@ -1,13 +1,7 @@
-class Character(object):
-    def __init__(self, name):
-        self.name = name
-        self.known_locations = []
-        
-    def reflect(self):
-        print "My known locations are: "+str(self.known_locations)
-    
+import time
+
 class Event(object):
-    """an object to trigger scripted character appearences, dialogue, encounters, movement, etc."""
+    """an object to trigger scripted character appearances, dialogue, encounters, movement, etc."""
     def __init__(self):
         pass
         
@@ -33,6 +27,21 @@ class Location(object):
     def describe_thing(self, thing):
         print self.nouns[thing]
         
+class Character(object):
+    def __init__(self):
+        self.name = ""
+        self.known_locations = []
+    
+    def get_name(self, name):
+        print "What is your name?"
+        if name:
+            self.name = name
+        else:
+            self.name = raw_input("> ")
+
+    def reflect(self):
+        print "My known locations are: "+str(self.known_locations)
+
 class Girl(object):
     def __init__(self, name, fall_in_love, prude, prefer_location):
         self.name = name
@@ -48,7 +57,8 @@ class Engine(object):
         self.girls = {}
         
     def introduction(self):
-        print "Welcome to ."
+        time.sleep(0.5)
+        print "Welcome to the the pre-Alpha of a dating sim tentatively titled 'Don\'t Let Her Fall in Love with You'. You are a game development educator and part time student. Your goal is to achieve as many life-enhancing experiences as possible through shared time with women. Unless you are committed to one, you must avoiding their inevitable 'falling in love' with you or risk falling back in love with them, before they leave you only to have your heart shattered. Try pressing ? at any time."
         
     def build_locations(self, location_list):
         for key, value in location_list.iteritems():
@@ -97,9 +107,16 @@ class Engine(object):
         
     def get_input(self, inputobj, character):
         s = inputobj.scan(raw_input("> "), inputobj)
-        #print s
-        x = inputobj.parse_sentence(s)
+        print s
         
+        x = inputobj.parse_sentence(s)
+        #for i in dir(x):
+        #    print i
+        
+        if x.verb == "?":
+            print "I can do the following", inputobj.vocab['verb']
+            print "I can go in the following directions", inputobj.vocab['direction']
+            print "The following are in this scene", inputobj.vocab['noun']
         if x.verb.lower() == 'go':
             #Warning???? this MIGHT "erase" the list results of 's' above.
             self.activate_location(x.object.lower(), inputobj, character)
