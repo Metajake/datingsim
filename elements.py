@@ -1,70 +1,63 @@
 import time
 
-class Event(object):
-    """an object to trigger scripted character appearances, dialogue, encounters, movement, etc."""
-    def __init__(self):
-        pass
+#GAme States
+class EngineDisabled(object):
+    def __repr__(self):
+        return "disabled_state"
         
-class Scene(object):
-    """an object to indicate who and what is in our current location."""
-    def __init__(self, location, characters=[]):
-        self.location = location
-        if characters:
-            self.characters = characters
-
-class Location(object):
-    def __init__(self, name, destinations, description, date_description, verbs, nouns, inactive_verbs):
-        self.name = name
-        self.destinations = destinations
-        self.description = description
-        self.date_description = date_description        
-        self.verbs = verbs
-        self.nouns = nouns
-        self.inactive_verbs = inactive_verbs
+    def idle_engine(self, engine):
+        engine.state = EngineIdle()
         
-    def describe(self):
-        print self.description
-        
-    def describe_thing(self, thing):
-        print self.nouns[thing]
-        
-class Character(object):
-    def __init__(self):
-        self.name = ""
-        self.known_locations = []
+    def enable_dialogue(self, engine):
+        engine.state = DialogueEnabled()
     
-    def get_name(self, name=""):
-        print "What is your name?"
-        if name:
-            self.name = "Kosek"
-        else:
-            self.name = raw_input("> ")
+    def enable_day(self, engine):
+        engine.state = DayEnabled()
 
-    def reflect(self):
-        print "My name is", self.name
-        print "My known locations are: "+str(self.known_locations)
+class EngineIdle(EngineDisabled):
+    def __repr__(self):
+        return "idle_state"
+        
+class DialogueEnabled(object):
+    def __repr__(self):
+        return "dialogue_state"
 
-class Girl(object):
-    def __init__(self, name, fall_in_love, prude, prefer_location):
-        self.name = name
-        self.fall_in_love = fall_in_love
-        self.prude = prude
-        self.prefer_location = prefer_location
+    def disable_dialogue(self, engine):
+        engine.state = EngineIdle()
+        
+class DayEnabled(object):
+    def __repr__(self):
+        return "day_state"
+
+    def disable_day(self, engine):
+        engine.state = EngineIdle()
     
+#Game object
 class Engine(object):
     def __init__(self):
         self.game_over = False
         self.current_location = None
         self.locations = {}
         self.girls = {}
+        self.state = EngineDisabled()
+    
+    #State Functions
+    def idle_engine(self):
+        self.state.idle_engine(self)
+    def start_dialogue(self):
+        self.state.enable_dialogue(self)
+    def start_day(self):
+        self.state.enable_day(self)
         
     def introduction(self):
         time.sleep(0.5)
-        print """Welcome to the the pre-Alpha of a dating sim tentatively titled 'Don\'t Let Her Fall in Love with You'.
+        print """
+Welcome to the the pre-Alpha of a dating sim tentatively titled 'Don\'t Let Her Fall in Love with You'.
 
-        You are a game development educator and part time student. Your goal is to achieve a number of life-enhancing experiences through shared time with women. By spending time with them, inevitably, every woman will eventually fall in love with you. In return, unless you are committed to one, you risk falling in love with them, before they leave you only to have your heart shattered. The number of life enhancing experiences you have determines the strength of your commitment and ultimately the outcome of your connection with your one... true... love.
+You are a game development educator and part time student. Your goal is to achieve a number of life-enhancing experiences through shared time with women. By spending time with them, inevitably, every woman will eventually fall in love with you. In return, unless you are committed to one, you risk falling in love with them, before they leave you only to have your heart shattered. The number of life enhancing experiences you have determines the strength of your commitment and ultimately the outcome of your connection with your one... true... love.
+Try pressing ? at any time.
 
-        Try pressing ? at any time."""
+"""
         
     def build_locations(self, location_list):
         for key, value in location_list.iteritems():
@@ -73,7 +66,7 @@ class Engine(object):
             
     def build_girls(self, girl_list):
         for key, value in girl_list.iteritems():
-            obj = Girl(key, value['love'], value['prude'], value['location'])
+            obj = Girl(key, value['love'], value['prude'], value['location'], value['dialogue_tree'])
             self.girls[key] = obj
             
     def activate_location(self, destination, inputobj, character):
@@ -147,3 +140,43 @@ class Engine(object):
                 self.current_location.describe()
             else:
                 self.current_location.describe_thing(x.object)
+                
+class Location(object):
+    def __init__(self, name, destinations, description, date_description, verbs, nouns, inactive_verbs):
+        self.name = name
+        self.destinations = destinations
+        self.description = description
+        self.date_description = date_description        
+        self.verbs = verbs
+        self.nouns = nouns
+        self.inactive_verbs = inactive_verbs
+
+    def describe(self):
+        print self.description
+
+    def describe_thing(self, thing):
+        print self.nouns[thing]
+
+class Character(object):
+    def __init__(self):
+        self.name = ""
+        self.known_locations = []
+
+    def get_name(self, name=""):
+        if name:
+            self.name = "Kosek"
+        else:
+            print "What is your name?"
+            self.name = raw_input("> ")
+
+    def reflect(self):
+        print "My name is", self.name
+        print "My known locations are: "+str(self.known_locations)
+
+class Girl(object):
+    def __init__(self, name, fall_in_love, prude, prefer_location, dialogue_tree):
+        self.name = name
+        self.fall_in_love = fall_in_love
+        self.prude = prude
+        self.prefer_location = prefer_location
+        self.dialogue_tree = dialogue_tree
