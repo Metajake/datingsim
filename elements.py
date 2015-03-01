@@ -200,7 +200,7 @@ class Girl(object):
                 
 class Dialogue(object):
     def __init__(self):
-        self.levels = 4
+        self.levels = 5
                 
     def get_dialogue(self, engine, player, character):
         print """
@@ -212,6 +212,7 @@ class Dialogue(object):
         for i in range(self.levels):
 
             print "dialogue level", i
+            print "character opionion", character.opinion
 
             print "(Enter your choice)"
 
@@ -221,31 +222,53 @@ class Dialogue(object):
                 print 3, '-', character.dialogue_tree[i]['statement']['question']
                 
                 statement = raw_input("> ")
-                print statement
+                #print statement
+                
                 if int(statement) == 1:
-                    print character.dialogue_tree[i]['reply']['compliment']
-                    character.opinion += 1
+                    print character.dialogue_tree[i]['reply']['compliment'][0]
+                    character.opinion += character.dialogue_tree[i]['reply']['compliment'][1]
                 elif int(statement) == 2:
                     player.make_acquaintance(character)
-                    print character.dialogue_tree[i]['reply']['introduction']
-                    character.opinion += 0
+                    print character.dialogue_tree[i]['reply']['introduction'][0]
+                    character.opinion += character.dialogue_tree[i]['reply']['introduction'][1]
                 elif int(statement) == 3:
-                    print character.dialogue_tree[i]['reply']['question']
-                
+                    print character.dialogue_tree[i]['reply']['question'][0]
+                    character.opinion += character.dialogue_tree[i]['reply']['question'][1]
             else:
-                print 1, '-', character.dialogue_tree[i]['statement']['compliment']
-                print 2, '-', random.choice(engine.current_location.observations)
-                print 3, '-', character.dialogue_tree[i]['statement']['question']
+                if character.opinion < 3:
+                    print 1, '-', character.dialogue_tree[i]['statement']['compliment']
+                    print 2, '-', random.choice(engine.current_location.observations)
+                    print 3, '-', character.dialogue_tree[i]['statement']['question']
                 
-                statement = raw_input("> ")
+                    statement = raw_input("> ")
                 
-                if int(statement) == 1:
-                    print character.dialogue_tree[i]['reply']['compliment']
-                    character.opinion += 1
-                elif int(statement) == 2:
-                    print character.dialogue_tree[i]['reply']['observation']
-                    character.opinion += 0
-                elif int(statement) == 3:
-                    print character.dialogue_tree[i]['reply']['question']                
-                    
+                    if int(statement) == 1:
+                        print character.dialogue_tree[i]['reply']['compliment'][0]
+                        character.opinion += character.dialogue_tree[i]['reply']['compliment'][1]
+                    elif int(statement) == 2:
+                        print character.dialogue_tree[i]['reply']['observation'][0]
+                        character.opinion += character.dialogue_tree[i]['reply']['observation'][1]
+                    elif int(statement) == 3:
+                        print character.dialogue_tree[i]['reply']['question'][0] 
+                        character.opinion += character.dialogue_tree[i]['reply']['question'][1]            
+                else:
+                    print 1, '-', character.dialogue_tree[i]['statement']['compliment']
+                    print 2, '-', random.choice(engine.current_location.observations)
+                    print 3, '-', character.dialogue_tree[i]['statement']['question']
+                    print 4, '-', "Would you like to go on a date?"
+                
+                    statement = raw_input("> ")
+                
+                    if int(statement) == 1:
+                        print character.dialogue_tree[i]['reply']['compliment'][0]
+                        character.opinion += character.dialogue_tree[i]['reply']['compliment'][1]
+                    elif int(statement) == 2:
+                        print character.dialogue_tree[i]['reply']['observation'][0]
+                        character.opinion += character.dialogue_tree[i]['reply']['observation'][1]
+                    elif int(statement) == 3:
+                        print character.dialogue_tree[i]['reply']['question'][0]               
+                        character.opinion += character.dialogue_tree[i]['reply']['question'][1]
+                    elif int(statement) == 4:
+                        print "Sure! :) "
+                        
         engine.start_day()

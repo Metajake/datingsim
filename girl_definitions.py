@@ -12,62 +12,62 @@ girl_list = {
                     'question': 'Do you know where I can have some copies of this document made?'
                 },
                 'reply':{
-                    'compliment':"Thank you. Thats really nice of you to say.",
-                    'introduction': "Um.. That's nice.",
-                    'question': "I'm too busy.",
-                    'observation':'Yeah....'
+                    'compliment':["Thank you. Thats really nice of you to say.",1],
+                    'introduction': ["Um.. That's nice.",0],
+                    'question': ["I'm too busy.",-1],
+                    'observation':['Yeah....', 0]
                 }
             },
             1:{
                 'statement':{
                     'compliment':"You look really pretty.",
-                    'introduction': 'Hi, my name is Jake.',
+                    'introduction': 'Hi, my name is',
                     'question': 'Do you know where I can have some copies of this document made?'
                 },
                 'reply':{
-                    'compliment':"Thank you. Thats really nice of you to say.",
-                    'introduction': "Um.. That's nice.",
-                    'question': "I'm too busy.",
-                    'observation':'Yeah....'
+                    'compliment':["Thank you. Thats really nice of you to say.",-1],
+                    'introduction': ["It's nice to meet you.",1],
+                    'question': ["I'm too busy.",0],
+                    'observation':['Yeah....', 0]
                 }
             },
             2:{
                 'statement':{
                     'compliment':"You look really pretty.",
-                    'introduction': 'Hi, my name is Jake.',
+                    'introduction': 'Hi, my name is',
                     'question': 'Do you know where I can have some copies of this document made?'
                 },
                 'reply':{
-                    'compliment':"Thank you. Thats really nice of you to say.",
-                    'introduction': "Um.. That's nice.",
-                    'question': "I'm too busy.",
-                    'observation':'Yeah....'
+                    'compliment':["Thank you. Thats really nice of you to say.",0],
+                    'introduction': ["Um.. That's nice.",1],
+                    'question': ["Sure, the copy machine is right over here. I will show you.",1],
+                    'observation':['Yeah....', 0]
                 }
             },
             3:{
                 'statement':{
                     'compliment':"You look really pretty.",
-                    'introduction': 'Hi, my name is Jake.',
+                    'introduction': 'Hi, my name is',
                     'question': 'Do you know where I can have some copies of this document made?'
                 },
                 'reply':{
-                    'compliment':"Thank you. Thats really nice of you to say.",
-                    'introduction': "Um.. That's nice.",
-                    'question': "I'm too busy.",
-                    'observation':'Yeah....'
+                    'compliment':["Thank you. Thats really nice of you to say.",-1],
+                    'introduction': ["Um.. That's nice.",1],
+                    'question': ["I'm too busy.",0],
+                    'observation':['Yeah....', 0]
                 }
             },
             4:{
                 'statement':{
                     'compliment':"You look really pretty.",
-                    'introduction': 'Hi, my name is Jake.',
+                    'introduction': 'Hi, my name is',
                     'question': 'Do you know where I can have some copies of this document made?'
                 },
                 'reply':{
-                    'compliment':"Thank you. Thats really nice of you to say.",
-                    'introduction': "Um.. That's nice.",
-                    'question': "I'm too busy.",
-                    'observation':'Yeah....'
+                    'compliment':["Thank you. Thats really nice of you to say.",0],
+                    'introduction':[ "Um.. That's nice.",1],
+                    'question': ["I'm too busy.",0],
+                    'observation':['Yeah....', 0],
                 }
             }
         }
