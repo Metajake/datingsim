@@ -1,4 +1,4 @@
-import time
+import time, random
 
 #GAme States
 class EngineDisabled(object):
@@ -48,6 +48,7 @@ class Engine(object):
         self.state.enable_dialogue(self)
     def start_day(self):
         self.state.enable_day(self)
+        self.current_location.describe()
         
     def introduction(self, text):
         time.sleep(0.5)
@@ -55,7 +56,7 @@ class Engine(object):
         
     def build_locations(self, location_list):
         for key, value in location_list.iteritems():
-            obj = Location(key, value['destinations'], value['description'], value['date_description'], value['verbs'], value['nouns'], value['inactive_verbs'])
+            obj = Location(key, value['destinations'], value['description'], value['date_description'], value['verbs'], value['nouns'], value['inactive_verbs'], value['observations'])
             self.locations[key] = obj
             
     def build_girls(self, girl_list):
@@ -72,7 +73,8 @@ class Engine(object):
             self.current_location = self.locations[destination]
             
         print "I am currently at the "+ str(self.current_location.name)+"."
-        self.current_location.describe()
+        #moved to self.start_day() .. will it work?
+        #self.current_location.describe()
         
         character.known_locations.append(self.current_location.name)
 
@@ -148,31 +150,9 @@ class Engine(object):
                 self.current_location.describe()
             else:
                 self.current_location.describe_thing(x.object)
-    
-    def get_dialogue(self, d, main_character, character):
-        print """
-        %s stands in front of you.
-        """ % character.name
-        
-        print "Enter your choice."
-        for k,v in character.dialogue_tree[d.level]['statement'].iteritems():
-            print k, '-', v
-
-        d1 = raw_input("> ")
-
-        if d1 == 1:
-            print character.dialogue_tree[d.level]['reply'][1]
-            character.opinion += 1
-        elif d1 == 2:
-            print character.dialogue_tree[d.level]['reply'][2]
-            character.opinion += 0
-        elif d1 == 3:
-            print character.dialogue_tree[d.level]['reply'][3]
-        #d.level +=1
-        
-                
+                        
 class Location(object):
-    def __init__(self, name, destinations, description, date_description, verbs, nouns, inactive_verbs):
+    def __init__(self, name, destinations, description, date_description, verbs, nouns, inactive_verbs, observations):
         self.name = name
         self.destinations = destinations
         self.description = description
@@ -180,6 +160,7 @@ class Location(object):
         self.verbs = verbs
         self.nouns = nouns
         self.inactive_verbs = inactive_verbs
+        self.observations = observations
 
     def describe(self):
         print self.description
@@ -191,6 +172,7 @@ class Character(object):
     def __init__(self):
         self.name = ""
         self.known_locations = []
+        self.known_girls = []
 
     def get_name(self, name=""):
         if name:
@@ -198,7 +180,11 @@ class Character(object):
         else:
             print "What is your name?"
             self.name = raw_input("> ")
-
+    
+    def make_acquaintance(self, girl):
+        self.known_girls.append(girl.name)
+        #return "My name is %s." % self.name
+        
     def reflect(self):
         print "My name is", self.name
         print "My known locations are: "+str(self.known_locations)
@@ -211,7 +197,55 @@ class Girl(object):
         self.prefer_location = prefer_location
         self.opinion = opinion
         self.dialogue_tree = dialogue_tree
-        
+                
 class Dialogue(object):
     def __init__(self):
-        self.level = 1
+        self.levels = 4
+                
+    def get_dialogue(self, engine, player, character):
+        print """
+        %s stands in front of you.
+        """ % character.name
+        
+        print "Hello..."
+        
+        for i in range(self.levels):
+
+            print "dialogue level", i
+
+            print "(Enter your choice)"
+
+            if character.name not in player.known_girls:
+                print 1, '-', character.dialogue_tree[i]['statement']['compliment']
+                print 2, '-', character.dialogue_tree[i]['statement']['introduction'], player.name
+                print 3, '-', character.dialogue_tree[i]['statement']['question']
+                
+                statement = raw_input("> ")
+                print statement
+                if int(statement) == 1:
+                    print character.dialogue_tree[i]['reply']['compliment']
+                    character.opinion += 1
+                elif int(statement) == 2:
+                    player.make_acquaintance(character)
+                    print character.dialogue_tree[i]['reply']['introduction']
+                    character.opinion += 0
+                elif int(statement) == 3:
+                    print character.dialogue_tree[i]['reply']['question']
+                
+            else:
+                print 1, '-', character.dialogue_tree[i]['statement']['compliment']
+                print 2, '-', random.choice(engine.current_location.observations)
+                print 3, '-', character.dialogue_tree[i]['statement']['question']
+                
+                statement = raw_input("> ")
+                
+                if int(statement) == 1:
+                    print character.dialogue_tree[i]['reply']['compliment']
+                    character.opinion += 1
+                elif int(statement) == 2:
+                    print character.dialogue_tree[i]['reply']['observation']
+                    character.opinion += 0
+                elif int(statement) == 3:
+                    print character.dialogue_tree[i]['reply']['question']                
+                    
+        engine.start_day()

@@ -5,28 +5,69 @@ girl_list = {
         "location":"club",
         'opinion': 0,
         'dialogue_tree':{
-            1:{
+            0:{
                 'statement':{
-                    1:"Your work from last week was really good.",
-                    2: 'Hi, my name is Jake.',
-                    3: 'Do you know where I can have some copies of this document made?'
+                    'compliment':"Your work from last week was really good.",
+                    'introduction': 'Hi, my name is ',
+                    'question': 'Do you know where I can have some copies of this document made?'
                 },
                 'reply':{
-                    1:"Thank you. Thats really nice of you to say.",
-                    2: "Um.. That's nice.",
-                    3: "I'm too busy."
+                    'compliment':"Thank you. Thats really nice of you to say.",
+                    'introduction': "Um.. That's nice.",
+                    'question': "I'm too busy.",
+                    'observation':'Yeah....'
+                }
+            },
+            1:{
+                'statement':{
+                    'compliment':"You look really pretty.",
+                    'introduction': 'Hi, my name is Jake.',
+                    'question': 'Do you know where I can have some copies of this document made?'
+                },
+                'reply':{
+                    'compliment':"Thank you. Thats really nice of you to say.",
+                    'introduction': "Um.. That's nice.",
+                    'question': "I'm too busy.",
+                    'observation':'Yeah....'
                 }
             },
             2:{
                 'statement':{
-                    1:"You look really pretty.",
-                    2: 'Hi, my name is Jake.',
-                    3: 'Do you know where I can have some copies of this document made?'
+                    'compliment':"You look really pretty.",
+                    'introduction': 'Hi, my name is Jake.',
+                    'question': 'Do you know where I can have some copies of this document made?'
                 },
                 'reply':{
-                    1:"Thank you. Thats really nice of you to say.",
-                    2: "Um.. That's nice.",
-                    3: "I'm too busy."
+                    'compliment':"Thank you. Thats really nice of you to say.",
+                    'introduction': "Um.. That's nice.",
+                    'question': "I'm too busy.",
+                    'observation':'Yeah....'
+                }
+            },
+            3:{
+                'statement':{
+                    'compliment':"You look really pretty.",
+                    'introduction': 'Hi, my name is Jake.',
+                    'question': 'Do you know where I can have some copies of this document made?'
+                },
+                'reply':{
+                    'compliment':"Thank you. Thats really nice of you to say.",
+                    'introduction': "Um.. That's nice.",
+                    'question': "I'm too busy.",
+                    'observation':'Yeah....'
+                }
+            },
+            4:{
+                'statement':{
+                    'compliment':"You look really pretty.",
+                    'introduction': 'Hi, my name is Jake.',
+                    'question': 'Do you know where I can have some copies of this document made?'
+                },
+                'reply':{
+                    'compliment':"Thank you. Thats really nice of you to say.",
+                    'introduction': "Um.. That's nice.",
+                    'question': "I'm too busy.",
+                    'observation':'Yeah....'
                 }
             }
         }

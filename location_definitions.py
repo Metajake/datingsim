@@ -13,7 +13,8 @@ location_list = {
         'nouns':{
             'something':"it looks great"
         },
-        'inactive_verbs':{}
+        'inactive_verbs':{},
+        'observations':['It sure is nice out today.']
     },
     "home_exterior":{
         'ident':02,
@@ -30,7 +31,8 @@ location_list = {
         'nouns':{
             'home':'Your landlord does a great job keeping your apartment looking nice.'
         },
-        'inactive_verbs':{}
+        'inactive_verbs':{},
+        'observations':['It sure is nice outside of my home today.']
     },
     "home_interior":{
         'ident':03,
@@ -45,6 +47,7 @@ location_list = {
         },
         'inactive_verbs':{
             'masturbate':'Busting a nut feels great but you don\'t get any life changing experience from it.'
-        }
+        },
+        'observations':['It sure is nice in here today.']
     }
 }

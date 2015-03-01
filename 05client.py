@@ -24,4 +24,4 @@ while e.game_over != True:
     if str(e.state) == 'day_state':
         e.get_input(i, mc)
     elif str(e.state) == 'dialogue_state':
-        e.get_dialogue(d, mc, e.girls['tammy'])
+        d.get_dialogue(e, mc, e.girls['tammy'])
