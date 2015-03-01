@@ -3,11 +3,31 @@ girl_list = {
         "love":15,
         "prude":"easy",
         "location":"club",
+        'opinion': 0,
         'dialogue_tree':{
-            '01':{
-                'question':"Hi my name is tammy. how are you?",
-                'positive':"I like you.",
-                'negative':"I don't like you."
+            1:{
+                'statement':{
+                    1:"Your work from last week was really good.",
+                    2: 'Hi, my name is Jake.',
+                    3: 'Do you know where I can have some copies of this document made?'
+                },
+                'reply':{
+                    1:"Thank you. Thats really nice of you to say.",
+                    2: "Um.. That's nice.",
+                    3: "I'm too busy."
+                }
+            },
+            2:{
+                'statement':{
+                    1:"You look really pretty.",
+                    2: 'Hi, my name is Jake.',
+                    3: 'Do you know where I can have some copies of this document made?'
+                },
+                'reply':{
+                    1:"Thank you. Thats really nice of you to say.",
+                    2: "Um.. That's nice.",
+                    3: "I'm too busy."
+                }
             }
         }
     },
@@ -15,6 +35,7 @@ girl_list = {
         "love":10,
         "prude":"easy",
         "location":"work",
+        'opinion': 0,
         'dialogue_tree':{
             '01':{
                 'question':"Hi my name is tammy. how are you?",
@@ -27,6 +48,7 @@ girl_list = {
         "love":5,
         "prude":"hard",
         "location":"school",
+        'opinion': 0,
         'dialogue_tree':{
             '01':{
                 'question':"Hi my name is tammy. how are you?",
@@ -39,6 +61,7 @@ girl_list = {
         "love": 10,
         "prude": "med",
         "location": ["shopping", "home"],
+        'opinion': 0,
         'dialogue_tree':{
             '01':{
                 'question':"Hi my name is tammy. how are you?",
@@ -51,6 +74,7 @@ girl_list = {
         "love":5,
         "prude":"med",
         "location":"her_house",
+        'opinion': 0,
         'dialogue_tree':{
             '01':{
                 'question':"Hi my name is tammy. how are you?",
@@ -63,6 +87,7 @@ girl_list = {
         "love":5,
         "prude":"easy",
         "location": "home",
+        'opinion': 0,
         'dialogue_tree':{
             '01':{
                 'question':"Hi my name is tammy. how are you?",
@@ -75,6 +100,7 @@ girl_list = {
         "love":15,
         "prude":"hard",
         "location": ["river", "mountains"],
+        'opinion': 0,
         'dialogue_tree':{
             '01':{
                 'question':"Hi my name is tammy. how are you?",
@@ -87,6 +113,7 @@ girl_list = {
         "love":15,
         "prude":"med",
         "location":["gallery", "theatre"],
+        'opinion': 0,
         'dialogue_tree':{
             '01':{
                 'question':"Hi my name is tammy. how are you?",
@@ -99,6 +126,7 @@ girl_list = {
         "love":10,
         "prude":"hard",
         "location":"gym",
+        'opinion': 0,
         'dialogue_tree':{
             '01':{
                 'question':"Hi my name is tammy. how are you?",

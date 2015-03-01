@@ -18,14 +18,14 @@ class EngineIdle(EngineDisabled):
     def __repr__(self):
         return "idle_state"
         
-class DialogueEnabled(object):
+class DialogueEnabled(EngineDisabled):
     def __repr__(self):
         return "dialogue_state"
 
     def disable_dialogue(self, engine):
         engine.state = EngineIdle()
         
-class DayEnabled(object):
+class DayEnabled(EngineDisabled):
     def __repr__(self):
         return "day_state"
 
@@ -49,15 +49,9 @@ class Engine(object):
     def start_day(self):
         self.state.enable_day(self)
         
-    def introduction(self):
+    def introduction(self, text):
         time.sleep(0.5)
-        print """
-Welcome to the the pre-Alpha of a dating sim tentatively titled 'Don\'t Let Her Fall in Love with You'.
-
-You are a game development educator and part time student. Your goal is to achieve a number of life-enhancing experiences through shared time with women. By spending time with them, inevitably, every woman will eventually fall in love with you. In return, unless you are committed to one, you risk falling in love with them, before they leave you only to have your heart shattered. The number of life enhancing experiences you have determines the strength of your commitment and ultimately the outcome of your connection with your one... true... love.
-Try pressing ? at any time.
-
-"""
+        print text
         
     def build_locations(self, location_list):
         for key, value in location_list.iteritems():
@@ -66,7 +60,7 @@ Try pressing ? at any time.
             
     def build_girls(self, girl_list):
         for key, value in girl_list.iteritems():
-            obj = Girl(key, value['love'], value['prude'], value['location'], value['dialogue_tree'])
+            obj = Girl(key, value['love'], value['prude'], value['location'], value['opinion'], value['dialogue_tree'])
             self.girls[key] = obj
             
     def activate_location(self, destination, inputobj, character):
@@ -90,7 +84,7 @@ Try pressing ? at any time.
 
         #add location verbs to inputobject verb list
         del inputobj.verb[:]
-        inputobj.verb = ['go','give','leave','use','look']
+        inputobj.verb = ['go','give','leave','use','look', 'talk']
         for k, v in self.current_location.verbs.iteritems():
             inputobj.verb.append(k)
             
@@ -110,6 +104,15 @@ Try pressing ? at any time.
         inputobj.vocab['noun'] = inputobj.noun
         inputobj.vocab['inactive_verb'] = inputobj.inactive_verb
         
+    #maybe come back and use this
+    #def check_state(self, inputobj, character):
+    #    #print self.state
+    #    if str(self.state) == 'day_state':
+    #        self.get_input(inputobj, character)
+    #    elif self.state == 'dialogue_state':
+    #        self.get_dialogue(inputobj, character)
+
+        
     def get_input(self, inputobj, character):
         s = inputobj.scan(raw_input("> "), inputobj)
         #print s
@@ -127,19 +130,46 @@ Try pressing ? at any time.
         
         if x.verb == "?":
             inputobj.help()
+            
         if x.verb.lower() == 'go':
             if x.object.lower() == 'error':
                 inputobj.error_msg()
             else:
-                #Warning???? this MIGHT "erase" the list results of 's' above.
                 self.activate_location(x.object.lower(), inputobj, character)
-        elif x.verb.lower() == "reflect":
+        
+        if x.verb.lower() == "talk":
+            self.start_dialogue()
+            
+        if x.verb.lower() == "reflect":
             character.reflect()
-        elif x.verb.lower() == "look":
+        
+        if x.verb.lower() == "look":
             if x.object == "none":
                 self.current_location.describe()
             else:
                 self.current_location.describe_thing(x.object)
+    
+    def get_dialogue(self, d, main_character, character):
+        print """
+        %s stands in front of you.
+        """ % character.name
+        
+        print "Enter your choice."
+        for k,v in character.dialogue_tree[d.level]['statement'].iteritems():
+            print k, '-', v
+
+        d1 = raw_input("> ")
+
+        if d1 == 1:
+            print character.dialogue_tree[d.level]['reply'][1]
+            character.opinion += 1
+        elif d1 == 2:
+            print character.dialogue_tree[d.level]['reply'][2]
+            character.opinion += 0
+        elif d1 == 3:
+            print character.dialogue_tree[d.level]['reply'][3]
+        #d.level +=1
+        
                 
 class Location(object):
     def __init__(self, name, destinations, description, date_description, verbs, nouns, inactive_verbs):
@@ -174,9 +204,14 @@ class Character(object):
         print "My known locations are: "+str(self.known_locations)
 
 class Girl(object):
-    def __init__(self, name, fall_in_love, prude, prefer_location, dialogue_tree):
+    def __init__(self, name, fall_in_love, prude, prefer_location, opinion, dialogue_tree):
         self.name = name
         self.fall_in_love = fall_in_love
         self.prude = prude
         self.prefer_location = prefer_location
+        self.opinion = opinion
         self.dialogue_tree = dialogue_tree
+        
+class Dialogue(object):
+    def __init__(self):
+        self.level = 1
