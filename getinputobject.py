@@ -141,3 +141,40 @@ class Input(object):
         verb = self.parse_verb(word_list)
         obj = self.parse_object(word_list)
         return Sentence(subj, verb, obj)
+        
+    def get_input(self, engine, character):
+        s = self.scan(raw_input("> "), self)
+        #print s
+        
+        x = self.parse_sentence(s)
+        #for i in dir(x):
+        #    print i
+        #print x.subject
+        
+        if x.subject == 'error':
+            self.error_msg()
+        
+        if x.subject == 'inactive_player':
+            print engine.current_location.inactive_verbs[x.verb]
+        
+        if x.verb == "?":
+            self.help()
+            
+        if x.verb.lower() == 'go':
+            if x.object.lower() == 'error':
+                self.error_msg()
+            else:
+                engine.activate_location(x.object.lower(), self, character)
+        
+        if x.verb.lower() == "talk":
+            character.focus(engine.girls['tammy'])
+            engine.start_dialogue()
+            
+        if x.verb.lower() == "reflect":
+            character.reflect()
+        
+        if x.verb.lower() == "look":
+            if x.object == "none":
+                engine.current_location.describe()
+            else:
+                engine.current_location.describe_thing(x.object)

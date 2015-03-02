@@ -23,7 +23,7 @@ e.start_day()
 
 while e.game_over != True:
     if str(e.state) == 'day_state':
-        e.get_input(i, mc)
+        i.get_input(e, mc)
     elif str(e.state) == 'dialogue_state':
         d.get_dialogue(e, mc, mc.focus_character)
     elif str(e.state) == 'date_state':

@@ -203,44 +203,7 @@ class Engine(object):
         inputobj.vocab['direction'] = inputobj.direction
         inputobj.vocab['noun'] = inputobj.noun
         inputobj.vocab['inactive_verb'] = inputobj.inactive_verb
-        
-    def get_input(self, inputobj, character):
-        s = inputobj.scan(raw_input("> "), inputobj)
-        #print s
-        
-        x = inputobj.parse_sentence(s)
-        #for i in dir(x):
-        #    print i
-        #print x.subject
-        
-        if x.subject == 'error':
-            inputobj.error_msg()
-        
-        if x.subject == 'inactive_player':
-            print self.current_location.inactive_verbs[x.verb]
-        
-        if x.verb == "?":
-            inputobj.help()
-            
-        if x.verb.lower() == 'go':
-            if x.object.lower() == 'error':
-                inputobj.error_msg()
-            else:
-                self.activate_location(x.object.lower(), inputobj, character)
-        
-        if x.verb.lower() == "talk":
-            character.focus(self.girls['tammy'])
-            self.start_dialogue()
-            
-        if x.verb.lower() == "reflect":
-            character.reflect()
-        
-        if x.verb.lower() == "look":
-            if x.object == "none":
-                self.current_location.describe()
-            else:
-                self.current_location.describe_thing(x.object)
-                        
+                                
 class Location(object):
     def __init__(self, name, destinations, description, date_description, verbs, nouns, inactive_verbs, observations, experience_count, experience_gained):
         self.name = name
