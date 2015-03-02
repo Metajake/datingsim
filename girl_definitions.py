@@ -9,7 +9,7 @@ girl_list = {
             0:{
                 'statement':{
                     'compliment':"Your work from last week was really good.",
-                    'introduction': 'Hi, my name is ',
+                    'introduction': 'Hi, my name is',
                     'question': 'Do you know where I can have some copies of this document made?'
                 },
                 'reply':{

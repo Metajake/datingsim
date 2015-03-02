@@ -229,6 +229,7 @@ class Engine(object):
                 self.activate_location(x.object.lower(), inputobj, character)
         
         if x.verb.lower() == "talk":
+            character.focus(self.girls['tammy'])
             self.start_dialogue()
             
         if x.verb.lower() == "reflect":
@@ -271,10 +272,17 @@ class Character(object):
         self.experiences = {
             "need_to_protect": True
         }
+        focus_character = None
+        
+    def focus(self, character=None):
+        if character:
+            self.focus_character = character
+        else:
+            self.focus_character = None
 
     def get_name(self, name=""):
         if name:
-            self.name = "Kosek"
+            self.name = name
         else:
             print "What is your name?"
             self.name = raw_input("> ")
