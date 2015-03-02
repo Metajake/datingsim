@@ -4,6 +4,7 @@ girl_list = {
         "prude":"easy",
         "location":"club",
         'opinion': 0,
+        'affinity':'club',
         'dialogue_tree':{
             0:{
                 'statement':{
@@ -77,6 +78,7 @@ girl_list = {
         "prude":"easy",
         "location":"work",
         'opinion': 0,
+        'affinity':'club',
         'dialogue_tree':{
             '01':{
                 'question':"Hi my name is tammy. how are you?",
@@ -90,6 +92,7 @@ girl_list = {
         "prude":"hard",
         "location":"school",
         'opinion': 0,
+        'affinity':'club',
         'dialogue_tree':{
             '01':{
                 'question':"Hi my name is tammy. how are you?",
@@ -103,6 +106,7 @@ girl_list = {
         "prude": "med",
         "location": ["shopping", "home"],
         'opinion': 0,
+        'affinity':'club',
         'dialogue_tree':{
             '01':{
                 'question':"Hi my name is tammy. how are you?",
@@ -116,6 +120,7 @@ girl_list = {
         "prude":"med",
         "location":"her_house",
         'opinion': 0,
+        'affinity':'club',
         'dialogue_tree':{
             '01':{
                 'question':"Hi my name is tammy. how are you?",
@@ -129,6 +134,7 @@ girl_list = {
         "prude":"easy",
         "location": "home",
         'opinion': 0,
+        'affinity':'club',
         'dialogue_tree':{
             '01':{
                 'question':"Hi my name is tammy. how are you?",
@@ -142,6 +148,7 @@ girl_list = {
         "prude":"hard",
         "location": ["river", "mountains"],
         'opinion': 0,
+        'affinity':'club',
         'dialogue_tree':{
             '01':{
                 'question':"Hi my name is tammy. how are you?",
@@ -155,6 +162,7 @@ girl_list = {
         "prude":"med",
         "location":["gallery", "theatre"],
         'opinion': 0,
+        'affinity':'club',
         'dialogue_tree':{
             '01':{
                 'question':"Hi my name is tammy. how are you?",
@@ -168,6 +176,7 @@ girl_list = {
         "prude":"hard",
         "location":"gym",
         'opinion': 0,
+        'affinity':'club',
         'dialogue_tree':{
             '01':{
                 'question':"Hi my name is tammy. how are you?",

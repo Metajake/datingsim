@@ -9,6 +9,7 @@ e = Engine()
 i = Input()
 d = Dialogue()
 mc = Character()
+
 e.build_locations(location_list)
 e.build_girls(girl_list)
 
@@ -25,3 +26,5 @@ while e.game_over != True:
         e.get_input(i, mc)
     elif str(e.state) == 'dialogue_state':
         d.get_dialogue(e, mc, e.girls['tammy'])
+    elif str(e.state) == 'date_state':
+        e.date(e.current_location, mc)

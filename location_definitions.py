@@ -1,6 +1,5 @@
 location_list = {
     "city":{
-        'ident':01,
         'destinations':{
             'north':"mountains",
             'south':"home_exterior"
@@ -14,10 +13,11 @@ location_list = {
             'something':"it looks great"
         },
         'inactive_verbs':{},
-        'observations':['It sure is nice out today.']
+        'observations':['It sure is nice out today.'],
+        'experience_count':None,
+        'experience_gained':None
     },
     "home_exterior":{
-        'ident':02,
         'destinations':{
             'north':"city",
             'south':"river",
@@ -32,10 +32,11 @@ location_list = {
             'home':'Your landlord does a great job keeping your apartment looking nice.'
         },
         'inactive_verbs':{},
-        'observations':['It sure is nice outside of my home today.']
+        'observations':['It sure is nice outside of my home today.'],
+        'experience_count':None,
+        'experience_gained':None
     },
     "home_interior":{
-        'ident':03,
         'destinations':{
             'outside': "home_exterior"
         },
@@ -48,6 +49,25 @@ location_list = {
         'inactive_verbs':{
             'masturbate':'Busting a nut feels great but you don\'t get any life changing experience from it.'
         },
-        'observations':['It sure is nice in here today.']
+        'observations':['It sure is nice in here today.'],
+        'experience_count':15,
+        'experience_gained':"provide_for"
+    },
+    "club":{
+        'destinations':{
+            'outside': "city"
+        },
+        'description':"description of club",
+        'date_description':"The club is bumping.",
+        'verbs':{},
+        'nouns':{
+            'people':'They are hot and sweaty, moving to the beat of the music.'
+        },
+        'inactive_verbs':{
+            'dance':'Shaking it!'
+        },
+        'observations':['This music is great.'],
+        'experience_count':15,
+        'experience_gained':"need_to_protect"
     }
 }
