@@ -65,6 +65,7 @@ class Engine(object):
         self.state.enable_date(self)
         self.current_location.describe()
         
+    #Engine Setup functions
     def introduction(self, text):
         time.sleep(0.5)
         print text
@@ -79,79 +80,14 @@ class Engine(object):
             obj = Girl(key, value['love'], value['prude'], value['location'], value['opinion'], value['affinity'], value['dialogue_tree'])
             self.girls[key] = obj
             
-    
+    #Engine Action Functions
     def make_date(self, location, girl):
         location.is_date = True
         location.date_girl = girl
-        
-    def date(self, location, player):
-        #describe location Experience
-        print location.date_description
-        time.sleep(0.5)
-
-        #check if Girl has affinity for Location (increase experience chance)
-        if location.name == location.date_girl.affinity:
-            print location.date_girl.name, "loves it here!"
-            exp_chance_increase = 3
-        else:
-            exp_chance_increase = 0
-
-    ########################################################################
-    #To Do: Check if Experience has already occured.
-    #Nothing wrong with it occuring again, but if it has already occured
-    #then there should be a slight difference in the experience, and
-    #you won't get another EXP increase for doing it again.
-    ########################################################################
-
-        #roll to see if EXP happens (based on exp count, girl affinity and
-        #location rarity of exp occurance)
-        exp_chance = random.randint(1,location.experience_count - exp_chance_increase)
-
-        #if EXP happens, you can commit to her and she can fall in love with
-        #you on first "Hang"
-        if exp_chance == 1:
-            print "EXP OCCURRED!"
-            player.experiences[location.experience_gained] = True
-
-            if location.date_girl.committed_in != True:
-                player.commit(location.date_girl)
-            love_chance = random.randint(1,location.date_girl.love_count)
-            if love_chance == 1:
-                print "She fell in love with you."
-                self.fall_in_love(player, location.date_girl)
-            else:
-                location.date_girl.love_count -= 1
-
-        #if EXP does not happen, you can commit to her. Check if not first date
-        #She can fall in love with you if not first date.
-        else:
-            if location.date_girl.committed_in != True:
-                player.commit(location.date_girl)
-            if location.date_girl.first_hangout == True:
-                time.sleep(0.5)
-                love_chance = random.randint(1,location.date_girl.love_count)
-                if love_chance == 1:
-                    print "She almost fell in love with you (but didn't cause it was your first time hanging out)."    
-                location.date_girl.first_hangout = False
-            else:
-                love_chance = random.randint(1,location.date_girl.love_count)
-                if love_chance == 1:
-                    print "She fell in love with you."
-                    self.fall_in_love(player, location.date_girl)
-                else:
-                    location.date_girl.love_count -= 1
-
-        #subtract 1 from location experience count, every time visited
-        #no matter what
-        self.current_location.experience_count -= 1
-        
-        print "End of Date."
-        location.is_date = False
-        self.start_day()
-        
+                
     def fall_in_love(self, player, girl):
         endings.check_ending(player, girl)
-        self.end_game = True
+        self.game_over = True
     
     def activate_location(self, destination, inputobj, player):
         if self.current_location:

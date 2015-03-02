@@ -80,7 +80,7 @@ class Dialogue(object):
                         date_destination = raw_input("> ")
                         
                         print "Ok. That sounds good. I will see you there."
-                        time.sleep(0.6)
+                        time.sleep(0.3)
                         
                         if int(date_destination) == 1:
                             engine.make_date(engine.locations['club'], character)
