@@ -22,7 +22,7 @@ e.introduction(introduction)
 mc.get_name("jake")
 
 #### begin game #####
-activate_location(e,'home_exterior', i, mc)
+activate_location(e,'residential district', i, mc)
 e.start_day()
 
 while e.game_over != True:

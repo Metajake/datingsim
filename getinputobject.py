@@ -167,6 +167,8 @@ class Input(object):
         if x.verb.lower() == 'go':
             if x.object.lower() == 'none':
                 self.error_msg()
+            elif x.object.lower() == 'error':
+                print "I'm not sure where that is or if it even exists."
             else:
                 activate_location(engine, x.object.lower(), self, character)
         

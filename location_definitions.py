@@ -2,7 +2,8 @@ location_list = {
     "city":{
         'destinations':{
             'north':"mountains",
-            'south':"home_exterior"
+            'south':"residential district",
+            'east':'night life district'
         },
         'description':"this is the description of the city",
         'date_description':"this is the DATE description of the city",
@@ -16,14 +17,15 @@ location_list = {
         'observations':['It sure is nice out today.'],
         'experience_gained':None
     },
-    "home_exterior":{
+    "residential district":{
         'destinations':{
             'north':"city",
             'south':"river",
-            'inside': "home_interior"
+            'inside': "home",
+            'west':'shopping district'
         },
-        'description':"description of home exterior",
-        'date_description':"description of Date at home exterior",
+        'description':"description of residential district",
+        'date_description':"description of Date at residential district",
         'verbs':{
             'think':'You miss your mom.'
         },
@@ -34,12 +36,12 @@ location_list = {
         'observations':['It sure is nice outside of my home today.'],
         'experience_gained':None
     },
-    "home_interior":{
+    "home":{
         'destinations':{
-            'outside': "home_exterior"
+            'outside': "residential district"
         },
-        'description':"description of home interior",
-        'date_description':"description of Date at home interior",
+        'description':"description of home",
+        'date_description':"description of Date at home",
         'verbs':{},
         'nouns':{
             'dog':'Your dog looks happy.'
@@ -81,5 +83,38 @@ location_list = {
         },
         'observations':['Work sure is awesome.'],
         'experience_gained':"make_another_jealous"
+    },
+    "restaurant":{
+        'destinations':{
+            'outside':"shopping district"
+        },
+        'description':"this is the description of the restaurant",
+        'date_description':"the candle light sets the mood perfectly. The wine makes you feel so good.",
+        'verbs':{
+            'eat':'Yum. Careful not to fill up too much.'
+        },
+        'nouns':{
+            'something':"it looks great"
+        },
+        'inactive_verbs':{},
+        'observations':['I hear that they have the best food in town.'],
+        'experience_gained':"need to provide"
+    },
+    "shopping district":{
+        'destinations':{
+            'east':"residential district",
+            'restaurant':'restaurant'
+        },
+        'description':"this is the description of the shopping district",
+        'date_description':"this is the DATE description of the shopping district",
+        'verbs':{
+            'think':'Commercialism...'
+        },
+        'nouns':{
+            'people':"capitolism is sweet."
+        },
+        'inactive_verbs':{},
+        'observations':['It sure is nice in the shopping district today.'],
+        'experience_gained':None
     }
 }
