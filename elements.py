@@ -72,12 +72,12 @@ class Engine(object):
         
     def build_locations(self, location_list):
         for key, value in location_list.iteritems():
-            obj = Location(key, value['destinations'], value['description'], value['date_description'], value['verbs'], value['nouns'], value['inactive_verbs'], value['observations'], value['experience_count'], value['experience_gained'])
+            obj = Location(key, value['destinations'], value['description'], value['date_description'], value['verbs'], value['nouns'], value['inactive_verbs'], value['observations'], value['experience_gained'])
             self.locations[key] = obj
             
     def build_girls(self, girl_list):
         for key, value in girl_list.iteritems():
-            obj = Girl(key, value['love'], value['prude'], value['location'], value['opinion'], value['affinity'], value['dialogue_tree'])
+            obj = Girl(key, value['love'], value['prude'], value['meet_at'], value['affinity'], value['dialogue_tree'])
             self.girls[key] = obj
             
     #Engine Action Functions
@@ -90,6 +90,8 @@ class Engine(object):
         self.game_over = True
     
     def activate_location(self, destination, inputobj, player):
+        #if a 'current location already exists set new destination to current
+        #location based off it's relationship to current location
         if self.current_location:
             if destination in self.current_location.destinations.keys():
                 new_location = self.current_location.destinations[destination]
@@ -99,13 +101,23 @@ class Engine(object):
         else:
             self.current_location = self.locations[destination]
             
+        #check if destination location is a date
         if self.current_location.is_date == True:
-            print "I'm excited to meet her here for our date."
+            print "I'm excited to meet %s here for our date." % self.current_location.date_girl.name
             self.start_date()
         else:
-            print "I am currently at the "+ str(self.current_location.name)+"."
-                    
-        player.known_locations.append(self.current_location.name)
+            print "I am currently at the "+ str(self.current_location.name) + "."
+            #clear list of characters in location
+            #repopulate list of avaiable characters based on current location
+            del inputobj.character[:]
+            for k,v in self.girls.iteritems():
+                if self.current_location.name == v.meet_at:
+                    inputobj.character.append(k)
+                    print "%s is here." % k
+        
+        #add currect location to player.known_locations if its not already there
+        if self.current_location.name not in player.known_locations:            
+            player.known_locations.append(self.current_location.name)
 
         #clear the list of directions you can go    
         #repopulate list of available directions based on current location
@@ -113,7 +125,9 @@ class Engine(object):
         for k, v in self.current_location.destinations.iteritems():
             inputobj.direction.append(k)
 
-        #add location verbs to inputobject verb list
+        ###!!!!!!!!!!!!!!
+        #ADD DEFAULT VERBS
+        #AND add location verbs to inputobject verb list
         del inputobj.verb[:]
         inputobj.verb = ['go','give','leave','use','look', 'talk']
         for k, v in self.current_location.verbs.iteritems():
@@ -141,7 +155,7 @@ class Engine(object):
         inputobj.vocab['inactive_verb'] = inputobj.inactive_verb
                                 
 class Location(object):
-    def __init__(self, name, destinations, description, date_description, verbs, nouns, inactive_verbs, observations, experience_count, experience_gained):
+    def __init__(self, name, destinations, description, date_description, verbs, nouns, inactive_verbs, observations, experience_gained):
         self.name = name
         self.destinations = destinations
         self.description = description
@@ -150,7 +164,7 @@ class Location(object):
         self.nouns = nouns
         self.inactive_verbs = inactive_verbs
         self.observations = observations
-        self.experience_count = experience_count
+        self.experience_count = 15
         self.experience_gained = experience_gained
         self.is_date = False
         self.date_girl = None
@@ -164,12 +178,12 @@ class Location(object):
 class Character(object):
     def __init__(self):
         self.name = ""
-        self.known_locations = ['club']
+        self.known_locations = ['club', 'work']
         self.known_girls = []
         self.commits = 3
         self.committed_to = ""
         self.experiences = {
-            "need_to_protect": True
+            "need_to_protect": False
         }
         focus_character = None
         
@@ -207,12 +221,12 @@ class Character(object):
             print "No more commits left."
 
 class Girl(object):
-    def __init__(self, name, love_count, prude, prefer_location, opinion, affinity, dialogue_tree):
+    def __init__(self, name, love_count, prude, meet_at, affinity, dialogue_tree):
         self.name = name
         self.love_count = love_count
         self.prude = prude
-        self.prefer_location = prefer_location
-        self.opinion = opinion
+        self.meet_at = meet_at
+        self.opinion = 0
         self.affinity = affinity
         self.dialogue_tree = dialogue_tree
         self.committed_in = False

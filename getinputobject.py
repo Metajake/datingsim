@@ -20,12 +20,14 @@ class Input(object):
         self.direction = []
         self.command = ['reflect', '?']
         self.noun=['condom','flowers']
+        self.character = []
         self.inactive_verb = ['masturbate']
         self.stop=['the','in','of','to', 'at']
         self.vocab={
             'verb':self.verb,
             'direction':self.direction,
             'noun':self.noun,
+            'character':self.character,
             'stop':self.stop,
             'command':self.command,
             'inactive_verb':self.inactive_verb
@@ -130,6 +132,8 @@ class Input(object):
                 return self.match(word_list, 'noun')
             elif next_word == 'direction':
                 return self.match(word_list, 'direction')
+            elif next_word == 'character':
+                return self.match(word_list, 'character')
             elif next_word == 'error':
                 return('noun', 'error')
             else:
@@ -149,7 +153,7 @@ class Input(object):
         x = self.parse_sentence(s)
         #for i in dir(x):
         #    print i
-        #print x.subject
+        #print x.subject, x.verb, x.object
         
         if x.subject == 'error':
             self.error_msg()
@@ -167,8 +171,11 @@ class Input(object):
                 engine.activate_location(x.object.lower(), self, character)
         
         if x.verb.lower() == "talk":
-            character.focus(engine.girls['tammy'])
-            engine.start_dialogue()
+            if x.object == 'none':
+                self.error_msg()
+            else:
+                character.focus(engine.girls[x.object])
+                engine.start_dialogue()
             
         if x.verb.lower() == "reflect":
             character.reflect()

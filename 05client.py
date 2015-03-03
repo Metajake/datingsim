@@ -27,8 +27,6 @@ while e.game_over != True:
     if str(e.state) == 'day_state':
         i.get_input(e, mc)
     elif str(e.state) == 'dialogue_state':
-        #remove MC.Focus character as an argment and just reference it directly
-        #off of MC inside the function
-        d.get_dialogue(e, mc, mc.focus_character)
+        d.get_dialogue(e, mc)
     elif str(e.state) == 'date_state':
         exp.date(e, mc)
