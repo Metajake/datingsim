@@ -6,6 +6,7 @@ from location_definitions import *
 from girl_definitions import *
 from elements import *
 from expobject import *
+from locationobj import *
 
 e = Engine()
 i = Input()
@@ -21,7 +22,7 @@ e.introduction(introduction)
 mc.get_name("jake")
 
 #### begin game #####
-e.activate_location('home_exterior', i, mc)
+activate_location(e,'home_exterior', i, mc)
 e.start_day()
 
 while e.game_over != True:

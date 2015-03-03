@@ -1,4 +1,4 @@
-#object version
+from locationobj import activate_location
 
 #Parser Error Function  
 class ParserError(Exception):
@@ -168,14 +168,17 @@ class Input(object):
             if x.object.lower() == 'none':
                 self.error_msg()
             else:
-                engine.activate_location(x.object.lower(), self, character)
+                activate_location(engine, x.object.lower(), self, character)
         
         if x.verb.lower() == "talk":
             if x.object == 'none':
                 self.error_msg()
             else:
-                character.focus(engine.girls[x.object])
-                engine.start_dialogue()
+                if x.object not in engine.current_location.characters:
+                    print "I don't see that person here."
+                else:
+                    character.focus(engine.girls[x.object])
+                    engine.start_dialogue()
             
         if x.verb.lower() == "reflect":
             character.reflect()

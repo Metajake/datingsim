@@ -1,5 +1,6 @@
 import time, random
 import endings
+from locationobj import *
 
 #GAme States
 class EngineDisabled(object):
@@ -88,93 +89,7 @@ class Engine(object):
     def fall_in_love(self, player, girl):
         endings.check_ending(player, girl)
         self.game_over = True
-    
-    def activate_location(self, destination, inputobj, player):
-        #if a 'current location already exists set new destination to current
-        #location based off it's relationship to current location
-        if self.current_location:
-            if destination in self.current_location.destinations.keys():
-                new_location = self.current_location.destinations[destination]
-                self.current_location = self.locations[new_location]
-            else:
-                self.current_location = self.locations[destination]
-        else:
-            self.current_location = self.locations[destination]
-            
-        #check if destination location is a date
-        if self.current_location.is_date == True:
-            print "I'm excited to meet %s here for our date." % self.current_location.date_girl.name
-            self.start_date()
-        else:
-            print "I am currently at the "+ str(self.current_location.name) + "."
-            #clear list of characters in location
-            #repopulate list of avaiable characters based on current location
-            del inputobj.character[:]
-            for k,v in self.girls.iteritems():
-                if self.current_location.name == v.meet_at:
-                    inputobj.character.append(k)
-                    print "%s is here." % k
-        
-        #add currect location to player.known_locations if its not already there
-        if self.current_location.name not in player.known_locations:            
-            player.known_locations.append(self.current_location.name)
-
-        #clear the list of directions you can go    
-        #repopulate list of available directions based on current location
-        del inputobj.direction[:]
-        for k, v in self.current_location.destinations.iteritems():
-            inputobj.direction.append(k)
-
-        ###!!!!!!!!!!!!!!
-        #ADD DEFAULT VERBS
-        #AND add location verbs to inputobject verb list
-        del inputobj.verb[:]
-        inputobj.verb = ['go','give','leave','use','look', 'talk']
-        for k, v in self.current_location.verbs.iteritems():
-            inputobj.verb.append(k)
-            
-        #add location nouns to inputobject verb list
-        del inputobj.noun[:]
-        for k, v in self.current_location.nouns.iteritems():
-            inputobj.noun.append(k)
-            
-        #add location inactive verbs to inputobjects inactive verb list
-        del inputobj.inactive_verb[:]
-        for k, v in self.current_location.inactive_verbs.iteritems():
-            inputobj.inactive_verb.append(k)
-        
-        ####### PUTTING THIS HERE. NOT SURE IF GOES ELSEWHERE BETTER!!! ########
-        #appends list of player known locations to get_input "destinations"
-        for i in player.known_locations:
-            inputobj.direction.append(i)
-        
-        #update Input Object's "Vocab" lists
-        inputobj.vocab['verb'] = inputobj.verb
-        inputobj.vocab['direction'] = inputobj.direction
-        inputobj.vocab['noun'] = inputobj.noun
-        inputobj.vocab['inactive_verb'] = inputobj.inactive_verb
-                                
-class Location(object):
-    def __init__(self, name, destinations, description, date_description, verbs, nouns, inactive_verbs, observations, experience_gained):
-        self.name = name
-        self.destinations = destinations
-        self.description = description
-        self.date_description = date_description        
-        self.verbs = verbs
-        self.nouns = nouns
-        self.inactive_verbs = inactive_verbs
-        self.observations = observations
-        self.experience_count = 15
-        self.experience_gained = experience_gained
-        self.is_date = False
-        self.date_girl = None
-
-    def describe(self):
-        print self.description
-
-    def describe_thing(self, thing):
-        print self.nouns[thing]
-
+                                    
 class Character(object):
     def __init__(self):
         self.name = ""
