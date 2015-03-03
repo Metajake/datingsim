@@ -165,7 +165,7 @@ class Input(object):
             self.help()
             
         if x.verb.lower() == 'go':
-            if x.object.lower() == 'error':
+            if x.object.lower() == 'none':
                 self.error_msg()
             else:
                 engine.activate_location(x.object.lower(), self, character)
