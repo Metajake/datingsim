@@ -4,7 +4,7 @@ girl_list = {
         "prude":"easy",
         "meet_at":"club",
         'affinity':'club',
-        'meet_at':'work',
+        'meet_at':'bar',
         'dialogue_tree':{
             0:{
                 'statement':{
@@ -162,7 +162,7 @@ girl_list = {
     "claire":{
         "love": 10,
         "prude": "med",
-        "meet_at": ["shopping", "home"],
+        "meet_at": 'shopping district',
         'affinity':'club',
         'dialogue_tree':{
             '01':{
@@ -175,7 +175,7 @@ girl_list = {
     "rebecca":{
         "love":5,
         "prude":"med",
-        "meet_at":"her_house",
+        "meet_at":"store",
         'affinity':'club',
         'dialogue_tree':{
             '01':{
@@ -188,7 +188,7 @@ girl_list = {
     "brittany":{
         "love":5,
         "prude":"easy",
-        "meet_at": "home",
+        "meet_at": "night life district",
         'affinity':'club',
         'dialogue_tree':{
             '01':{
@@ -201,7 +201,7 @@ girl_list = {
     "kerry":{
         "love":15,
         "prude":"hard",
-        "meet_at": ["river", "mountains"],
+        "meet_at": 'walking path',
         'affinity':'club',
         'dialogue_tree':{
             '01':{
@@ -214,7 +214,7 @@ girl_list = {
     "ricky":{
         "love":15,
         "prude":"med",
-        "meet_at":["gallery", "theatre"],
+        "meet_at": 'theatre district',
         'affinity':'club',
         'dialogue_tree':{
             '01':{
