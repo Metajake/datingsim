@@ -171,6 +171,15 @@ class Input(object):
                 print "I'm not sure where that is or if it even exists."
             else:
                 activate_location(engine, x.object.lower(), self, character)
+                
+        if x.verb.lower() == 'leave':
+            if x.object == 'none':
+                if 'outside' in engine.current_location.destinations:
+                    activate_location(engine, 'outside', self, character)
+                else:
+                    print "Where do you want to leave to?"
+            else:
+                activate_location(engine, x.object, self, character)
         
         if x.verb.lower() == "talk":
             if x.object == 'none':

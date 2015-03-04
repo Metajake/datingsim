@@ -116,5 +116,21 @@ location_list = {
         'inactive_verbs':{},
         'observations':['It sure is nice in the shopping district today.'],
         'experience_gained':None
+    },
+    "her place":{
+        'destinations':{
+            'outside':"residential district"
+        },
+        'description':"this is the description of the shopping district",
+        'date_description':"this is the DATE description of the shopping district",
+        'verbs':{
+            'think':'Commercialism...'
+        },
+        'nouns':{
+            'people':"capitolism is sweet."
+        },
+        'inactive_verbs':{},
+        'observations':['It sure is nice in the shopping district today.'],
+        'experience_gained':None
     }
 }
