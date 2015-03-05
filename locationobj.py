@@ -1,3 +1,5 @@
+import random
+
 class Location(object):
     def __init__(self, name, destinations, description, date_description, verbs, nouns, inactive_verbs, observations, experience_gained):
         self.name = name
@@ -42,12 +44,20 @@ def activate_location(engine, destination, inputobj, player):
         #repopulate list of avaiable characters based on current location
         del inputobj.character[:]
         del engine.current_location.characters[:]
-        for k,v in engine.girls.iteritems():
-            if engine.current_location.name == v.meet_at:
-                inputobj.character.append(k)
-                engine.current_location.characters.append(k)
-                print "%s is here." % k
-    
+        for k, v in engine.girls.iteritems():
+            if v.meet_at != 'none':
+                if engine.current_location.name == v.meet_at:
+                    inputobj.character.append(k)
+                    engine.current_location.characters.append(k)
+                    print "%s is here." % k
+                    v.meet_her_at()
+            else:
+                see_at = random.choice(v.see_at)
+                if engine.current_location.name == see_at:
+                    inputobj.character.append(k)
+                    engine.current_location.characters.append(k)
+                    print "%s is here." % k
+                
     #add currect location to player.known_locations if its not already there
     if engine.current_location.name not in player.known_locations:            
         player.known_locations.append(engine.current_location.name)
@@ -86,3 +96,4 @@ def activate_location(engine, destination, inputobj, player):
     inputobj.vocab['direction'] = inputobj.direction
     inputobj.vocab['noun'] = inputobj.noun
     inputobj.vocab['inactive_verb'] = inputobj.inactive_verb
+    inputobj.vocab['character'] = inputobj.character

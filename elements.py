@@ -78,7 +78,7 @@ class Engine(object):
             
     def build_girls(self, girl_list):
         for key, value in girl_list.iteritems():
-            obj = Girl(key, value['love'], value['prude'], value['meet_at'], value['affinity'], value['dialogue_tree'])
+            obj = Girl(key, value['love'], value['prude'], value['meet_at'], value['see_at'], value['affinity'], value['dialogue_tree'])
             self.girls[key] = obj
             
     #Engine Action Functions
@@ -136,13 +136,18 @@ class Character(object):
             print "No more commits left."
 
 class Girl(object):
-    def __init__(self, name, love_count, prude, meet_at, affinity, dialogue_tree):
+    def __init__(self, name, love_count, prude, meet_at, see_at, affinity, dialogue_tree):
         self.name = name
         self.love_count = love_count
         self.prude = prude
         self.meet_at = meet_at
-        self.opinion = 0
+        self.see_at = see_at
         self.affinity = affinity
         self.dialogue_tree = dialogue_tree
+        self.opinion = 0
         self.committed_in = False
         self.first_hangout = True
+    
+    def meet_her_at(self, destination="none"):
+        self.meet_at = destination
+        
