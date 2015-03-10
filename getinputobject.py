@@ -101,7 +101,8 @@ class Input(object):
             elif next_word == 'error':
                 return ('noun', 'error')
             else:
-                raise ParserError("(parsing subject) Expected a verb next.")
+                return('noun', 'none')
+                #raise ParserError("(parsing subject) Expected a verb next.")
                 
     def parse_verb(self, word_list):
         if not word_list:
@@ -118,8 +119,8 @@ class Input(object):
             elif self.peek(word_list) == 'error':
                 return ('verb', 'error')
             else:
-                #return ('verb', 'none')
-                raise ParserError("(parsing verb) Expected a verb next.")
+                return ('verb', 'none')
+                #raise ParserError("(parsing verb) Expected a verb next.")
                 
     def parse_object(self, word_list):
         if not word_list:
@@ -155,7 +156,7 @@ class Input(object):
         #    print i
         #print x.subject, x.verb, x.object
         
-        if x.subject == 'error':
+        if x.subject == 'error' or x.subject == 'none':
             self.error_msg()
         
         if x.subject == 'inactive_player':
