@@ -7,17 +7,20 @@ from girl_definitions import *
 from elements import *
 from expobject import *
 from locationobj import *
+from graphicsobj import *
 
 e = Engine()
 i = Input()
 d = Dialogue()
 exp = Experience()
 mc = Character()
+g = Graphics()
 
 e.build_locations(location_list)
 e.build_girls(girl_list)
 
 ##### intro/setup game ######
+g.initialize()
 e.introduction(introduction)
 mc.get_name("jake")
 

@@ -1,4 +1,6 @@
+import sys, pygame
 from locationobj import activate_location
+from pygame.locals import *
 
 #Parser Error Function  
 class ParserError(Exception):
@@ -200,3 +202,8 @@ class Input(object):
                 engine.current_location.describe()
             else:
                 engine.current_location.describe_thing(x.object)
+                
+        for event in pygame.event.get():
+            if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+                pygame.quit()
+                sys.exit()
