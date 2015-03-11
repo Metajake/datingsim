@@ -1,6 +1,8 @@
 import time, random
 import endings
 from locationobj import *
+from graphicsobj import *
+import PyDark.engine
 
 #GAme States
 class EngineDisabled(object):
@@ -45,28 +47,41 @@ class DateEnabled(EngineDisabled):
         engine.state = EngineIdle()
     
 #Game object
-class Engine(object):
-    def __init__(self):
+class Engine(PyDark.engine.Game):
+    def __init__(self, title, window_size):
+        PyDark.engine.Game.__init__(self, title=title, window_size = window_size)
+        self.title = title
+        self.window_size = window_size
         self.game_over = False
         self.current_location = None
         self.locations = {}
         self.girls = {}
-        self.state = EngineDisabled()
         self.dates = []
+        
+        self.current_scene = "day_scene"
+        self.state = EngineDisabled()
         
     #State Functions
     def idle_engine(self):
-        self.state.idle_engine(self)
+        #self.state.idle_engine(self)
+        self.current_scene = "idle_engine"
     def start_dialogue(self):
         self.state.enable_dialogue(self)
     def start_day(self):
-        self.state.enable_day(self)
+        #self.state.enable_day(self)
+        self.current_scene = "login_scene"
         self.current_location.describe()
     def start_date(self):
         self.state.enable_date(self)
         self.current_location.describe()
         
     #Engine Setup functions
+    def load_assets(self):
+        self.idle_engine = PyDark.engine.Scene(surface = self, name = "idle_engine")
+        self.add_scene(self.idle_engine)
+        self.day_scene = PyDark.engine.Scene(surface=self, name="day_scene")
+        self.add_scene(self.day_scene)        
+    
     def introduction(self, text):
         time.sleep(0.5)
         print text
@@ -82,6 +97,11 @@ class Engine(object):
             self.girls[key] = obj
             
     #Engine Action Functions
+    def run(self):
+        print "Engine starting\n"
+        self.start()
+        print "Done Engine starting\n"
+        
     def make_date(self, location, girl):
         location.is_date = True
         location.date_girl = girl

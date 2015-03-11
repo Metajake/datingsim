@@ -202,8 +202,3 @@ class Input(object):
                 engine.current_location.describe()
             else:
                 engine.current_location.describe_thing(x.object)
-                
-        for event in pygame.event.get():
-            if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
-                pygame.quit()
-                sys.exit()

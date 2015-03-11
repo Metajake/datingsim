@@ -1,5 +1,5 @@
 #-
-from engine_text import *
+import engine_text as EngineText
 from getinputobject import *
 from getdialogue import *
 from location_definitions import *
@@ -9,29 +9,31 @@ from expobject import *
 from locationobj import *
 from graphicsobj import *
 
-e = Engine()
 i = Input()
 d = Dialogue()
 exp = Experience()
 mc = Character()
-g = Graphics()
 
+e = Engine("Don't Let Her Fall in Love with You", (640, 480))
+e.load_assets()
 e.build_locations(location_list)
 e.build_girls(girl_list)
 
-##### intro/setup game ######
+g = Graphics(e)
 g.initialize()
-e.introduction(introduction)
-mc.get_name("jake")
+##### intro/setup game ######
+e.run()
+#e.introduction(EngineText.introduction)
+#mc.get_name("jake")
 
 #### begin game #####
-activate_location(e,'residential district', i, mc)
-e.start_day()
+#activate_location(e,'residential district', i, mc)
+#e.start_day()
 
-while e.game_over != True:
-    if str(e.state) == 'day_state':
-        i.get_input(e, mc)
-    elif str(e.state) == 'dialogue_state':
-        d.get_dialogue(e, mc)
-    elif str(e.state) == 'date_state':
-        exp.date(e, mc)
+#while e.game_over != True:
+#    if str(e.state) == 'day_state':
+#        i.get_input(e, mc)
+#    elif str(e.state) == 'dialogue_state':
+#        d.get_dialogue(e, mc)
+#    elif str(e.state) == 'date_state':
+#        exp.date(e, mc)
